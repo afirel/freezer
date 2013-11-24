@@ -1,0 +1,8 @@
+:aws:
+  :aws_access_key_id: ACCESS_KEY
+  :aws_secret_access_key: SECRET_KEY
+  :region: eu-west-1
+  :glacier:
+    :vault: YOUR_VAULT
+:journal:
+  :database_url: 'sqlite3:///~/.icer/journal.sqlite3'

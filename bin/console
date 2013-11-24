@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+$:.unshift File.join(__dir__, "..", "lib")
+
+require 'rubygems'
+require 'bundler/setup'
+
+require 'pry'
+require 'yaml'
+require 'logging'
+require 'active_record'
+
+require 'icer'
+ActiveRecord::Base.establish_connection Icer.database_url
+
+require 'archive'
+require 'archiver'
+require 'packer'
+
+client = Icer.glacier_client
+packer = Packer.new(path: '/tmp/packer')
+
+archiver = Archiver.new(client, packer)
+
+directory = '/home/abrandl/workspace/icer/tmp'
+
+binding.pry
