@@ -44,7 +44,7 @@ class Archiver
   end
 
   def archive_file!(file, package, description: nil, delete_after: false)
-    info "archiving #{file}"
+    info "archiving #{file.path}"
     meta = archive_file(file, description)
 
     archive = Archive.new(meta)

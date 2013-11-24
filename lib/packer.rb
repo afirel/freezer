@@ -17,7 +17,7 @@ class Packer
 
     remove_existing(name)
 
-    tar = "/bin/tar cf - \"#{directory}\""
+    tar = "/bin/tar cf - \"#{directory.path}\""
     compress = "/usr/bin/lzma -z --to-stdout -"
     gpg = "/usr/bin/gpg -q -r mail@andreas-brandl.de -e #{"-s "if sign} -"
     split = "/usr/bin/split -b #{split_size} -d -a 4 - \"#{path}/#{name}.tar.lzma.gpg.\""
@@ -28,11 +28,12 @@ class Packer
 
     command = pipe.map { |c| "#{c} 2> /dev/null"}.join(" | ")
 
-    info "preparing #{directory}... tar/compress/gpg/split"
+    info "preparing #{directory.path}... tar/compress/gpg/split"
+    info command
     `#{command}`
     raise 'tar failed' unless $? == 0
 
-    info "calculating par2 infos for #{directory}..."
+    info "calculating par2 infos for #{directory.path}..."
     `/usr/bin/par2create #{pattern(name)} &> /dev/null`
 
     raise 'par2 failed' unless $? == 0
